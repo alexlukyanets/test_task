@@ -10,3 +10,6 @@ Link of task https://www.notion.so/Python-test-assessment-by-DevelopsToday-901e3
 - [ ] Documented with Postman
 - [ ] Add Postman collection link to the README
 - [x] Mars
+
+alex
+alexandr123
