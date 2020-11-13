@@ -16,6 +16,17 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
+from django.contrib import admin
+from django.urls import path, include
+
+from news.views import *
+
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('api/news/', NewList.as_view()),
+    path('api/new/<int:pk>', NewRetrieveUpdateDestroy.as_view()),
+    path('api/new/<int:pk>/vote/', VoteCreate.as_view()),
+    path('api/new/<int:pk>/comments/', CommentCreate.as_view()),
+    path('api/comment/<int:pk>', CommentRetrieveUpdateDestroy.as_view()),
+    path('api-auth/', include('rest_framework.urls'))
 ]
