@@ -5,12 +5,19 @@ Tasks
 - [x] Create Comment CRUD API 
 - [x] endpoint to upvote the post
 - [ ] Recurring job running once a day to reset post upvotes count
-- [ ] Docker container. API + Postgres 
-- [ ] Deploy API for testing to Heroku
-- [ ] Add deployment link to the README
+
 - [ ] Documented with Postman
 - [ ] Add Postman collection link to the README
 - [x] Mars
 
+- [ ] Docker container. API + Postgres 
+- [ ] Deploy API for testing to Heroku
+
 alex
 alexandr123
+
+secure-reef-11170
+
+https://secure-reef-11170.herokuapp.com/
+http://git.heroku.com/secure-reef-11170.git
+secure-reef-11170
