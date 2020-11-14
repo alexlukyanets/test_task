@@ -12,11 +12,14 @@ Tasks
 - [ ] Docker container. API + Postgres 
 - [ ] Deploy API for testing to Heroku
 
-secure-reef-11170
+
+
 Documented with Postman
 https://documenter.getpostman.com/view/9950425/TVep8TBa#886473de-7c41-423e-91e4-2da94e6a8127
+
+
 
 Heroku app
 https://secure-reef-11170.herokuapp.com/
 http://git.heroku.com/secure-reef-11170.git
-secure-reef-11170
+
