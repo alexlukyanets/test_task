@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from .models import New, Vote, Comment
-import json
+
 
 class NewSerializer(serializers.ModelSerializer):
     author = serializers.ReadOnlyField(source='author.username')
@@ -15,12 +15,13 @@ class NewSerializer(serializers.ModelSerializer):
     def get_votes(self, new):
         return Vote.objects.filter(new=new).count()
 
-    def get_comments(self, new, **kwargs):
+    def get_comments(self, new):
         data = Comment.objects.filter(new_id=new.id).values('id', 'content', 'author__username', 'created_at')
         if data:
             return data
         else:
             return None
+
 
 
 class VoteSerializer(serializers.ModelSerializer):
