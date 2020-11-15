@@ -5,12 +5,12 @@ Link of task https://www.notion.so/Python-test-assessment-by-DevelopsToday-901e3
 - [x] Create Comment CRUD API 
 - [x] endpoint to upvote the post
 
-
 # Создание моделей, стерилизаторов и контроллера
 Создано три модели: New – для новостей, Comment – для комментариев к новостям и Vote – для голосования к новостям. 
 
 ## Модель New
 > (Комментарий от разработчика – сущность новости должна была быть названа Post, не переименована по причине отсутствие важности в названии)
+
 title (тип - CharField)
 link (URLField, unique=True – новость должна содержать уникальную ссылку)
 created_at (DateTimeField(auto_now_add=True)
@@ -25,6 +25,8 @@ new - ForeignKey ссылается на новость New, реализует 
 ## Модель Vote
 voter – ForeignKey ссылается на существую модельUser из Django – голосовать за новость может только авторизированный пользователь
 new – ForeignKey ссылается на новость New. Реализация связи один ко многим. Один голос пользователя может принадлежать только одной новости, но за новость можно голосовать большому количеству пользователей. 
+
+
 
 # Создание стерилизаторов
 Создано 3 класса стериализаторов: NewSerializer, CommentSerializer, VoteSerializer
@@ -43,6 +45,9 @@ author_id – ReadOnlyField, при создании также извлекае
 new – ReadOnlyField, при создании извлекается из адресного запроса пользователя. 
 
 ## VoteSerializer – класс для сериализации голосов из модели Vote, сериализует поле id. 
+
+
+
 
 # Создание Контролеров
 Создано 5 контролеров: NewListCreate,  NewRetrieveUpdateDestroy,  CommentListCreate,  CommentRetrieveUpdateDestroy,  VoteCreateDestroy,
