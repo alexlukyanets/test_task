@@ -67,21 +67,50 @@ Link of task https://www.notion.so/Python-test-assessment-by-DevelopsToday-901e3
 ## VoteCreateDestroy
 Наследован от generic класса и миксина DestroyModelMixin. Позволяет удалять и создавать (голосовать) за отдельную новость. Возвращает исключение при попытке голосования за несуществующую новость,  попытке повторного голосования и при попытке удаление голоса от пользователя который за неё не голосовал. Методы POST, DELETE. Обращаться нужно по URL 'api/new/<int:pk>/vote/'.
 
-- [x] Recurring job running once a day to reset post upvotes count
-- [x] Documented with Postman
-- [x] Add Postman collection link to the README
-
+# Tasks step 2
 - [ ] Docker container. API + Postgres 
 - [ ] Deploy API for testing to Heroku
+Столкнулся со сложностью в работе с Docker. Ранее с ним не работал, но провел целый день в тутриалах и понял масштаб функциональности контейнерной сборки. Понял, как формируются сборочные файлы, сервисы, что такое образы и контейнеры. Как не пытался, но попытка перенаправить порт из контейнера в локальную среду не имела результат.
+Внутри контейнера все работает, выполняются миграции с базой. Подозреваю, что ошибка в используемой машине (windows 7, docker toolbox) и, к сожалению, проверить на другой машине не имел возможности. 
+После привязки и отправки контейнера на Heroku, также не заработало. 
+Можно было попробовать без контейнера, но не хватило времени ну не соответствовало заданию.
 
-
-
-Documented with Postman
-https://documenter.getpostman.com/view/9950425/TVep8TBa#886473de-7c41-423e-91e4-2da94e6a8127
-
-
-
-Heroku app
+Heroku app don`t work
 https://secure-reef-11170.herokuapp.com/
-http://git.heroku.com/secure-reef-11170.git
+
+# Tasks step 3
+Создание примитивной коллекции не составило трудностей (ранее этого не делал). Думаю, что можно было сделать намного красивей, но не хватало опыта и примера.
+- [x] Documented with Postman
+- [x] Add Postman collection link to the README
+[Documented with Postman](https://documenter.getpostman.com/view/9950425/TVep8TBa#886473de-7c41-423e-91e4-2da94e6a8127)
+
+# Tasks step 4
+Использовал существующий модуль "django_cron". Работающих с последней версией Django модулей, в которых работы выполнялась при запуске сервера - не нашел. 
+Думаю, что подобный функционал нужно реализовывать встроенными утилитами cron или systemd (UNIX). На том же Heroku есть встроенный Scheduler.
+- [x] Recurring job running once a day to reset post upvotes count
+
+```
+Пример кода
+```
+
+```python
+class MyCronJob(CronJobBase):
+    RUN_EVERY_MINS = 1440
+    RUN_AT_TIMES = ['00:00]
+    schedule = Schedule(run_every_mins=RUN_EVERY_MINS, run_at_times=RUN_AT_TIMES)
+    code = 'news.job'  # a unique code
+
+    def do(self):
+        Vote.objects.all().delete()
+```
+
+
+
+
+
+
+
+
+
+
 
