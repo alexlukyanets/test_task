@@ -11,8 +11,8 @@ Link of task https://www.notion.so/Python-test-assessment-by-DevelopsToday-901e3
 ## Модель New
 > (Комментарий от разработчика – сущность новости должна была быть названа Post, не переименована по причине отсутствие важности в названии)
 
-title (тип - CharField)
-link (URLField, unique=True – новость должна содержать уникальную ссылку)
+- ul title (тип - CharField)
+- ul link (URLField, unique=True – новость должна содержать уникальную ссылку)
 created_at (DateTimeField(auto_now_add=True)
 author ForeignKey ссылается на существую модельUser из Django – новость может создать авторизированный пользователь)
 
