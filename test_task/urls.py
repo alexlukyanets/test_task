@@ -23,10 +23,10 @@ from news.views import *
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/news/', NewList.as_view()),
+    path('api/news/', NewListCreate.as_view()),
     path('api/new/<int:pk>', NewRetrieveUpdateDestroy.as_view()),
-    path('api/new/<int:pk>/vote/', VoteCreate.as_view()),
-    path('api/new/<int:pk>/comments/', CommentCreate.as_view()),
+    path('api/new/<int:pk>/vote/', VoteCreateDestroy.as_view()),
+    path('api/new/<int:pk>/comments/', CommentListCreate.as_view()),
     path('api/comment/<int:pk>', CommentRetrieveUpdateDestroy.as_view()),
     path('api-auth/', include('rest_framework.urls'))
 ]

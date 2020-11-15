@@ -7,36 +7,7 @@ from .serializers import *
 from django.core.exceptions import ObjectDoesNotExist
 
 
-class NewRetrieveUpdateDestroy(generics.RetrieveUpdateDestroyAPIView):
-    queryset = New.objects.all()
-    serializer_class = NewSerializer
-    permission_classes = [permissions.IsAuthenticated]
-
-    def put(self, request, **kwargs):
-        new = New.objects.filter(pk=self.kwargs['pk'])
-        if new:
-            try:
-                new.get(author=self.request.user)
-                return self.update(request, **kwargs)
-            except ObjectDoesNotExist:
-                raise ValidationError('Новость может изменить только её создатель')
-        else:
-            raise ValidationError('Такой новости не сущствует')
-
-    def delete(self, request, *args, **kwargs):
-        new = New.objects.filter(pk=self.kwargs['pk'])
-        if new:
-            try:
-                new.get(author=self.request.user)
-                return self.update(request, **kwargs)
-            except ObjectDoesNotExist:
-
-                raise ValidationError('Новость может удалить только её создатель')
-        else:
-            raise ValidationError('Такой новости не сущствует')
-
-
-class NewList(generics.ListCreateAPIView):
+class NewListCreate(generics.ListCreateAPIView):
     queryset = New.objects.all()
     serializer_class = NewSerializer
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
@@ -45,43 +16,31 @@ class NewList(generics.ListCreateAPIView):
         serializer.save(author=self.request.user)
 
 
-class VoteCreate(generics.CreateAPIView, mixins.DestroyModelMixin):
-    serializer_class = VoteSerializer
+class NewRetrieveUpdateDestroy(generics.RetrieveUpdateDestroyAPIView):
+    queryset = New.objects.all()
+    serializer_class = NewSerializer
     permission_classes = [permissions.IsAuthenticated]
 
-    def get_queryset(self):
-        user = self.request.user
-        new = New.objects.get(pk=self.kwargs['pk'])
-        return Vote.objects.filter(voter=user, new=new)
-
-    def create_delete(self):
-        user = self.request.user
+    def put_delete(self, method, request, error, **kwargs):
         new = New.objects.filter(pk=self.kwargs['pk'])
-        if new.exists():
-            return Vote.objects.filter(voter=user, new=self.kwargs['pk'])
+        if new:
+            try:
+                new.get(author=self.request.user)
+                return method(request, **kwargs)
+            except ObjectDoesNotExist:
+                raise ValidationError(error)
         else:
-            raise ValidationError('Такой новости не существует')
+            raise ValidationError('Такой новости не сущствует')
 
-    def perform_create(self, serializer):
-        vote = self.create_delete()
-        if vote != None:
-            if not vote.exists():
-                serializer.save(voter=self.request.user, new=New.objects.get(pk=self.kwargs['pk']))
-                Response(status=status.HTTP_201_CREATED)
-            else:
-                raise ValidationError('Вы уже голосовали за эту новость')
+    def put(self, request, **kwargs):
+        error = 'Новость может изменить только её создатель'
+        return self.put_delete(self.update, request, error, **kwargs)
 
-    def delete(self, requests, *args, **kwargs):
-        vote = self.create_delete()
-        if vote != None:
-            if vote:
-                vote.delete()
-                return Response(status=status.HTTP_204_NO_CONTENT)
-            else:
-                raise ValidationError('Вы не голосовали за эту новость ')
+    def delete(self, request, *args, **kwargs):
+        error = 'Новость может удалить только её создатель'
+        return self.put_delete(self.destroy, request, error, **kwargs)
 
-
-class CommentCreate(generics.ListCreateAPIView):
+class CommentListCreate(generics.ListCreateAPIView):
     serializer_class = CommentSerializer
     permission_classes = [permissions.IsAuthenticated]
 
@@ -142,3 +101,41 @@ class CommentRetrieveUpdateDestroy(generics.RetrieveUpdateDestroyAPIView):
             return self.destroy(request, *args, **kwargs)
         else:
             raise ValidationError('Коментарий может удалить только его создатель')
+
+class VoteCreateDestroy(generics.CreateAPIView, mixins.DestroyModelMixin):
+    serializer_class = VoteSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get_queryset(self):
+        user = self.request.user
+        new = New.objects.get(pk=self.kwargs['pk'])
+        return Vote.objects.filter(voter=user, new=new)
+
+    def create_delete(self):
+        user = self.request.user
+        new = New.objects.filter(pk=self.kwargs['pk'])
+        if new.exists():
+            return Vote.objects.filter(voter=user, new=self.kwargs['pk'])
+        else:
+            raise ValidationError('Такой новости не существует')
+
+    def perform_create(self, serializer):
+        vote = self.create_delete()
+        if vote != None:
+            if not vote.exists():
+                serializer.save(voter=self.request.user, new=New.objects.get(pk=self.kwargs['pk']))
+                Response(status=status.HTTP_201_CREATED)
+            else:
+                raise ValidationError('Вы уже голосовали за эту новость')
+
+    def delete(self, requests, *args, **kwargs):
+        vote = self.create_delete()
+        if vote != None:
+            if vote:
+                vote.delete()
+                return Response(status=status.HTTP_204_NO_CONTENT)
+            else:
+                raise ValidationError('Вы не голосовали за эту новость ')
+
+
+
