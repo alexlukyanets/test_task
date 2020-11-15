@@ -1,6 +1,6 @@
 Link of task https://www.notion.so/Python-test-assessment-by-DevelopsToday-901e35b8314d4ddc962bebf5041871d6
 
-#Tasks
+# Tasks
 - [x] Create Post CRUD API 
 - [x] Create Comment CRUD API 
 - [x] endpoint to upvote the post
