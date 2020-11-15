@@ -1,6 +1,6 @@
 Link of task https://www.notion.so/Python-test-assessment-by-DevelopsToday-901e35b8314d4ddc962bebf5041871d6
 
-# Tasks setp 1
+# Task step 1
 - [x] Create Post CRUD API 
 - [x] Create Comment CRUD API 
 - [x] endpoint to upvote the post
@@ -67,7 +67,7 @@ Link of task https://www.notion.so/Python-test-assessment-by-DevelopsToday-901e3
 ## VoteCreateDestroy
 Наследован от generic класса и миксина DestroyModelMixin. Позволяет удалять и создавать (голосовать) за отдельную новость. Возвращает исключение при попытке голосования за несуществующую новость,  попытке повторного голосования и при попытке удаление голоса от пользователя который за неё не голосовал. Методы POST, DELETE. Обращаться нужно по URL 'api/new/<int:pk>/vote/'.
 
-# Tasks step 2
+# Task step 2
 - [ ] Docker container. API + Postgres 
 - [ ] Deploy API for testing to Heroku
 Столкнулся со сложностью в работе с Docker. Ранее с ним не работал, но провел целый день в тутриалах и понял масштаб функциональности контейнерной сборки. Понял, как формируются сборочные файлы, сервисы, что такое образы и контейнеры. Как не пытался, но попытка перенаправить порт из контейнера в локальную среду не имела результат.
@@ -78,7 +78,7 @@ Link of task https://www.notion.so/Python-test-assessment-by-DevelopsToday-901e3
 Heroku app don`t work
 https://secure-reef-11170.herokuapp.com/
 
-# Tasks step 3
+# Task step 3
 Создание примитивной коллекции не составило трудностей (ранее этого не делал). Думаю, что можно было сделать намного красивей, но не хватало опыта и примера.
 - [x] Documented with Postman
 - [x] Add Postman collection link to the README
@@ -104,7 +104,8 @@ class MyCronJob(CronJobBase):
         Vote.objects.all().delete()
 ```
 
-
+# Final
+С некоторыми инструментами знаком не был, что заняло много времени. Спасибо, за опыт!
 
 
 
