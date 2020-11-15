@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'news.apps.NewsConfig',
+    "django_cron",
 ]
 
 MIDDLEWARE = [
@@ -52,6 +53,10 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'test_task.urls'
+
+CRON_CLASSES = [
+    "news.job.MyCronJob",
+]
 
 TEMPLATES = [
     {
