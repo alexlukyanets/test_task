@@ -28,5 +28,10 @@ urlpatterns = [
     path('api/new/<int:pk>/vote/', VoteCreateDestroy.as_view()),
     path('api/new/<int:pk>/comments/', CommentListCreate.as_view()),
     path('api/comment/<int:pk>', CommentRetrieveUpdateDestroy.as_view()),
-    path('api-auth/', include('rest_framework.urls'))
+
+
+# Auth
+    path('api-auth/', include('rest_framework.urls')),
+    path('api/signup', signup),
+    path('api/login', login),
 ]

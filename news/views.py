@@ -5,6 +5,39 @@ from rest_framework.response import Response
 from .models import New, Vote
 from .serializers import *
 from django.core.exceptions import ObjectDoesNotExist
+from django.http import JsonResponse
+from rest_framework.authtoken.models import Token
+from django.contrib.auth.models import User
+from django.db import IntegrityError
+from django.views.decorators.csrf import csrf_exempt
+from django.contrib.auth import authenticate
+
+@csrf_exempt
+def signup(request):
+    if request.method == 'POST':
+        try:
+            user = User.objects.create_user(request.POST['username'], password=request.POST['password'])
+            user.save()
+            token = Token.objects.create(user=user)
+            return JsonResponse({'token': str(token)}, status=201)
+        except IntegrityError:
+            return JsonResponse(({'error': 'That username has already been taken. Please choose a new username'}),
+                                status=201)
+
+
+@csrf_exempt
+def login(request):
+    if request.method == 'POST':
+        user = authenticate(request, username=request.POST['username'], password=request.POST['password'])
+        if user is None:
+            return JsonResponse(({'error': 'Check username or password'}),
+                                status=201)
+        else:
+            try:
+                token = Token.objects.get(user=user)
+            except:
+                token = Token.objects.create(user=user)
+            return JsonResponse({'token': str(token)}, status=200)
 
 
 class NewListCreate(generics.ListCreateAPIView):
@@ -39,6 +72,7 @@ class NewRetrieveUpdateDestroy(generics.RetrieveUpdateDestroyAPIView):
     def delete(self, request, *args, **kwargs):
         error = 'Новость может удалить только её создатель'
         return self.put_delete(self.destroy, request, error, **kwargs)
+
 
 class CommentListCreate(generics.ListCreateAPIView):
     serializer_class = CommentSerializer
@@ -102,6 +136,7 @@ class CommentRetrieveUpdateDestroy(generics.RetrieveUpdateDestroyAPIView):
         else:
             raise ValidationError('Коментарий может удалить только его создатель')
 
+
 class VoteCreateDestroy(generics.CreateAPIView, mixins.DestroyModelMixin):
     serializer_class = VoteSerializer
     permission_classes = [permissions.IsAuthenticated]
@@ -136,6 +171,3 @@ class VoteCreateDestroy(generics.CreateAPIView, mixins.DestroyModelMixin):
                 return Response(status=status.HTTP_204_NO_CONTENT)
             else:
                 raise ValidationError('Вы не голосовали за эту новость ')
-
-
-
