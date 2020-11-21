@@ -83,7 +83,7 @@ https://secure-reef-11170.herokuapp.com/
 Создание примитивной коллекции не составило трудностей (ранее этого не делал). Думаю, что можно было сделать намного красивей, но не хватало опыта и примера.
 - [x] Documented with Postman
 - [x] Add Postman collection link to the README
-[Documented with Postman](https://documenter.getpostman.com/view/9950425/TVep8TBa#886473de-7c41-423e-91e4-2da94e6a8127)
+[Documented with Postman](https://documenter.getpostman.com/view/9950425/TVev44Sx#beb2897a-d5fb-4701-845a-5c277ceed86a)
 
 # Tasks step 4
 Использовал существующий модуль "django_cron". Работающих с последней версией Django модулей, в которых работы выполнялась при запуске сервера - не нашел. 
