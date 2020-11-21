@@ -12,6 +12,7 @@ from django.db import IntegrityError
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth import authenticate
 
+
 @csrf_exempt
 def signup(request):
     if request.method == 'POST':

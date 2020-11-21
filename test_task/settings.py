@@ -20,13 +20,14 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'cuqc3a)^@$@^k4*g()juz%svi-=%$+ql!(!nge#!2bk*c*-g%r'
+#SECRET_KEY = 'cuqc3a)^@$@^k4*g()juz%svi-=%$+ql!(!nge#!2bk*c*-g%r'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+SECRET_KEY = os.environ.get('SECRET_KEY', default='foo')
 
-ALLOWED_HOSTS = []
-#ALLOWED_HOSTS = ['localhost', '127.0.0.1',  'secure-reef-11170.herokuapp.com']
+DEBUG = int(os.environ.get('DEBUG', default=0))
+#DEBUG = True
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', '192.168.99.100']
 
 # Application definition
 
@@ -39,7 +40,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'news.apps.NewsConfig',
-    "django_cron",
     'rest_framework.authtoken',
 ]
 
