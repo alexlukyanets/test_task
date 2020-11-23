@@ -2,7 +2,7 @@
 - [x] Comment CRUD API 
 - [x] endpoint to upvote the post
 - [x] Docker container. API + Postgres 
-- [x] Deploy API for testing to Heroku [Heroku app](https://stormy-refuge-71915.herokuapp.com/api/news/)
+- [x] Deploy API for testing to [Heroku app](https://stormy-refuge-71915.herokuapp.com/api/news/)
 - [x] [Documented with Postman](https://documenter.getpostman.com/view/9950425/TVev44Sx#beb2897a-d5fb-4701-845a-5c277ceed86a)
 
 # Создание моделей, стерилизаторов и контроллера
